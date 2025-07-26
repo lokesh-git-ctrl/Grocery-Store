@@ -1,0 +1,74 @@
+{% extends 'shop/layouts/main.html' %}
+{% load static %}
+{% block title %}
+
+Grocery Store | Online Shopping
+
+{% endblock title %}
+
+{% block content %}
+  <!--header-->
+  <div class="header">
+    <div>
+        <h1>Fresh Groceries Delivered</h1>
+        <p>Explore our wide range of fresh produce and pantry essentials</p>
+        <a href="{% url 'collections'%}"><button class="headerbtn">Show Now</button></a>
+    </div>
+    <div>
+        <img class="headerimg" src="{% static 'images/main.webp' %}" alt="" width="300px" height="300px">
+    </div>
+</div>
+<!--container-->
+<div class="service">
+    <div class="service-container-1">
+        <div>
+            <h1>We Provide Freshest</h1>
+            <h2>Groceries at Your Doorstep</h2>
+        </div>
+        <div>
+            <p>|| Shop with us for the best quality produce, pantry staples, and unbeatable freshness.</p>
+        </div>
+    </div>
+    <div class="service-container-2">
+        <div>
+            <i class="fa-solid fa-truck"></i>
+            <h4>Fresh & Free Delivery</h4>
+            <p>Get fresh groceries delivered quickly, with no extra cost.</p>
+        </div>
+        <div>
+            <i class="fa-solid fa-sack-dollar"></i>
+            <i class="fa-solid fa-wallet"></i>
+            <h4>Cash On Delivery</h4>
+            <p>Pay for groceries on delivery with a secure, hassle-free experience.</p>
+        </div>
+        <div>
+            <i class="fa-solid fa-seedling"></i>
+            <h4>Quality Guaranteed 24/7</h4>
+            <p>We’re committed to quality and available 24/7 for assistance.</p>
+        </div>
+    </div>
+</div>
+<!--footer-->
+
+<script>
+    var sidenav=document.querySelector(".side-navbar")
+
+function shownav()
+{
+    sidenav.style.left="0"
+}
+function closenav()
+{
+    sidenav.style.left="-60%"
+}
+ // Function to toggle dropdown menus
+ function toggleDropdown(id) {
+    const dropdown = document.getElementById(id);
+    dropdown.classList.toggle('show'); // Add or remove the "show" class
+}
+</script>
+</body>
+</html>
+
+{% endblock content %}
+ 

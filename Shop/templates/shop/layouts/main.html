@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>
+        {% block title %}
+        {% endblock title %}
+    </title>
+  </head>
+  <body>
+    {% include 'shop/inc/navbar.html' %}
+    {% block content %}
+    {% endblock content %}
+    <div class="footer">
+      <div class="footer-container">
+          <div class="footer-box-1">
+              <h2 class="headingtext">CONTACT INFO</h2>
+              <div>
+                  <h4>ADDRESS</h4>
+                  <p>7/19 Big, Bazzar, Paramakudi, 623707, Ramanathapuram</p>
+              </div>
+              <div>
+                  <h4>PHONE</h4>
+                  <p>Moblie: +91-9843988089</p>
+              </div>
+              <div>
+                  <h4>EMAIL</h4>
+                  <p>kannananandh72@gmail.com</p>
+              </div>
+          </div>
+          <div class="footer-box-2">
+              <h2 class="headingtext">USEFUL LINKS</h2>
+              <p>> Privacy Policy</p>
+              <p>> Terms & Condition</p>
+              <p>> Refund / Cancellation</p>
+              <p>> About Us</p>
+              <p>> Shipping</p>
+              <p>> Contact Us</p>
+          </div>
+          
+      </div>
+      <div>@</div>
+  </div>
+    {% block scripts %}
+    {% endblock scripts %}
+   
+  </body>
+</html>

@@ -1,0 +1,73 @@
+{% extends 'shop/layouts/main.html' %}
+{% load static %}
+
+{% block title %}
+
+Collections | Grocery
+
+{% endblock title %}
+
+{% block content %}
+<section class="catagory">
+    <div class="catagory-container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">Categories</h4>
+                <hr style="border-color:#b8bfc2;">
+                {% include 'shop/inc/message.html' %}
+            </div>
+            {% for item in catagory %}
+            <div class="col-md-4 col-lg-3">
+                <div class="card my-3">
+                    <img src="{{item.image.url}}" class="card-image-top" alt="Categories" width="200px" height="200px">
+                    <a href="{% url 'collections' item.name %}">
+                    <div class="card-body">
+                        <h5 class="itemname" style="color: black;">{{item.name}}</h5>
+                        <p class="itemdescription">{{item.description}}</p>
+                    </div>
+                </a>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!--footer-->
+
+<script>
+ var productContainer = document.getElementById("products");
+var searchButton = document.getElementById("search-btn");
+var productList = productContainer.querySelectorAll(".img-container");
+var searchInput = document.getElementById("search-input");
+
+// Add event listener to the search button
+searchButton.addEventListener("click", function () {
+    var enteredValue = searchInput.value.toUpperCase(); // Convert input to uppercase for case-insensitive comparison
+
+    // Loop through all products and filter them
+    for (var i = 0; i < productList.length; i++) {
+        var productName = productList[i].querySelector("h5").textContent; // Get the product name
+
+        // Check if the product name includes the search query
+        if (productName.toUpperCase().indexOf(enteredValue) < 0) {
+            productList[i].style.display = "none"; // Hide the product if it doesn't match
+        } else {
+            productList[i].style.display = "block"; // Show the product if it matches
+        }
+    }
+});
+
+
+var sidenav=document.querySelector(".side-navbar")
+
+function shownav()
+{
+    sidenav.style.left="0"
+}
+function closenav()
+{
+    sidenav.style.left="-60%"
+}
+</script>
+{% endblock content %}

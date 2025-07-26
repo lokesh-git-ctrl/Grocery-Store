@@ -1,0 +1,94 @@
+{% extends 'shop/layouts/main.html' %}
+{% load static %}
+{% block title %}
+
+Grocery Store | Online Shopping
+
+{% endblock title %}
+
+{% block content %}
+<!--header-->
+<section class="bg-light py-4 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">{{catagory_name}} Products</h4>
+                <hr style="border-color: #b8bfc2;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                        <li class="breadcrumb-item active">{{catagory_name}} Collections</li>
+                    </ol>
+                </nav>
+                <!-- Search Bar -->
+                <form class="product-search d-flex align-items-center shadow-sm p-3 mb-4 bg-white rounded">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Search products" 
+                        class="form-control me-2 rounded-pill px-3 shadow-sm" 
+                        aria-label="Search">
+                    <button 
+                        type="button" 
+                        id="search-btn"
+                        class="btn btn-primary rounded-pill px-4 shadow">
+                        <i class="fa fa-search"></i> Search
+                    </button>
+                </form>
+                
+                {% include 'shop/inc/message.html' %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<div id="products" class="product">
+    {% for item in products %}
+    <div class="img-container">
+        <div>
+            {% if item.product_image %}
+                <img src="{{ item.product_image.url }}" class="card-image-top" alt="Categories">
+            {% else %}
+                <img src="{% static 'shop/images/default_image.jpg' %}" class="card-image-top" alt="No Image Available">
+            {% endif %}
+        </div>
+        <a href="{% url 'product_details' catagory_name item.name %}">
+            <div class="img-details">
+                <h5>{{ item.name }}</h5>
+                <p>Price: ₹{{ item.price }}</p>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+<!--footer-->
+
+<script>
+// Selecting elements
+var productContainer = document.getElementById("products");
+var searchButton = document.getElementById("search-btn");
+var productList = productContainer.querySelectorAll(".img-container");
+var searchInput = document.getElementById("search-input");
+
+searchButton.addEventListener("click", function () {
+    var enteredValue = searchInput.value.toUpperCase(); 
+
+    for (var i = 0; i < productList.length; i++) {
+        var productName = productList[i].querySelector("h5").textContent; 
+
+        
+        if (productName.toUpperCase().indexOf(enteredValue) < 0) {
+            productList[i].style.display = "none";
+        } else {
+            productList[i].style.display = "block"; 
+        }
+    }
+});
+
+</script>
+
+{% endblock content %}

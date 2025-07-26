@@ -1,0 +1,51 @@
+{% extends 'shop/layouts/main.html' %}
+
+{% block title %}
+Cart | Grocery
+{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <h3>Welcome <span class="text-capitalize" style="font-size: 25px; color: #000;">{{request.user}}</span></h3>
+    </div>
+    <div class="col-sm-8 offset-sm-1">
+        <form action="" method="POST">
+            {% csrf_token %}
+            
+            <table class="table table-bordered">
+                <thead class="thead-light">
+                    <tr>
+                        <th colspan="2" class="text-center">Update Your Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fm in form %}
+                    <tr>
+                        <td><strong>{{ fm.label_tag }}</strong></td>
+                        <td>
+                            {{ fm }}
+                            <small class="text-danger">{{ fm.errors | striptags }}</small>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <div class="col-12 mt-3 text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="{% url 'address' %}" class="btn btn-danger">Back</a>
+            </div>
+            
+            {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="alert alert-danger my-3">{{ error }}</p>
+            {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS (Optional for interactions) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+{% endblock %}

@@ -1,0 +1,200 @@
+{% extends 'shop/layouts/main.html' %}
+{% load static %}
+{% block title %}
+
+Grocery Store | Online Shopping
+
+{% endblock title %}
+
+{% block content %}
+<!--header-->
+<section class="bg-light py-4 my-5" style="min-height: 300px;">
+    <div class="container">
+        <div class="row">
+            <!-- Header and Breadcrumb -->
+            <div class="col-12">
+                <h4 class="mb-3"> {{ products }} Details</h4>
+                <hr style="border-color: #b8bfc2;">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'collections' products.catagory.name %}">Collections</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ products }}</li>
+                    </ol>
+                </nav>
+                {% include 'shop/inc/message.html' %}
+            </div>
+
+            <!-- Product Image -->
+            <div class="col-md-5 my-3 text-center">
+                <img src="{{ products.product_image.url }}" class="product-image" alt="Categories"
+                    style="max-width: 100%; height: auto; box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;">
+            </div>
+
+            <!-- Product Details -->
+            <div class="col-md-7 my-3">
+                <h5 class="text-success" style="font-size: 24px;">{{ products.name | upper }}</h5>
+                <p style="font-size: 16px;">{{ products.description }}</p>
+                <h6 class="my-2" style="font-size: 20px; font-weight: bold;">₹{{ products.price }}
+                    
+                </h6>
+
+                <div class="my-3">
+                    {% if products.quantity > 0 %}
+                    <input type="hidden" value="{{ products.id }}" id="pid">
+                    <div class="input-group" style="max-width: 180px;">
+                        <button class="input-group-text bg-success text-light" id="btnMinus">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                        <input type="text" name="qty" id="txtQty" value="1" class="form-control text-center">
+                        <button class="input-group-text bg-success text-light" id="btnPlus">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                    <button class="btn btn-primary mt-3" id="btnCart">
+                        <i class="fa fa-shopping-cart"></i> Add to Cart
+                    </button>
+                    {% else %}
+                    <button class="btn btn-secondary mt-3">
+                        <i class="fa fa-minus"></i> Out of Stock
+                    </button>
+                    {% endif %}
+                    <button class="btn btn-danger mt-3" id="btnFav">
+                        <i class="fa fa-heart"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--footer-->
+
+<script>
+    var sidenav = document.querySelector(".side-navbar")
+
+    function shownav() {
+        sidenav.style.left = "0"
+    }
+    function closenav() {
+        sidenav.style.left = "-60%"
+    }
+    // Function to toggle dropdown menus
+    function toggleDropdown(id) {
+        const dropdown = document.getElementById(id);
+        dropdown.classList.toggle('show'); // Add or remove the "show" class
+    }
+    
+    document.addEventListener("DOMContentLoaded", function (event) {
+    const btnPlus = document.getElementById("btnPlus");
+    const btnMinus = document.getElementById("btnMinus");
+    const txtQty = document.getElementById("txtQty");
+    const btnCart = document.getElementById("btnCart");
+    const pid = document.getElementById("pid");
+    const btnFav = document.getElementById("btnFav");
+
+    // Debugging: Check if elements exist
+    console.log("btnPlus:", btnPlus);
+    console.log("btnMinus:", btnMinus);
+    console.log("txtQty:", txtQty);
+    console.log("btnCart:", btnCart);
+    console.log("pid:", pid);
+    console.log("btnFav:", btnFav);
+
+    if (btnPlus && txtQty) {
+        btnPlus.addEventListener("click", function () {
+            let qty = parseInt(txtQty.value, 10);
+            qty = isNaN(qty) ? 0 : qty;
+            if (qty < 20) {
+                qty++;
+                txtQty.value = qty;
+            }
+        });
+    } else {
+        console.error("btnPlus or txtQty not found.");
+    }
+
+    if (btnMinus && txtQty) {
+        btnMinus.addEventListener("click", function () {
+            let qty = parseInt(txtQty.value, 10);
+            qty = isNaN(qty) ? 0 : qty;
+            if (qty > 1) {
+                qty--;
+                txtQty.value = qty;
+            }
+        });
+    } else {
+        console.error("btnMinus or txtQty not found.");
+    }
+
+    if (btnCart && txtQty && pid) {
+        btnCart.addEventListener("click", function () {
+            let qty = parseInt(txtQty.value, 10);
+            qty = isNaN(qty) ? 0 : qty;
+            if (qty > 0) {
+                let postobj = {
+                    product_qty: qty,
+                    pid: pid.value,
+                };
+                // Send a POST request to add the item to the cart
+                fetch("/addtocart", {
+                    method: "POST",
+                    credentials: "same-origin",
+                    headers: {
+                        "Accept": "application/json",
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": '{{ csrf_token }}',
+                    },
+                    body: JSON.stringify(postobj),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        alert(data["status"]);
+                    })
+                    .catch((error) => {
+                        console.error("Error adding to cart:", error);
+                    });
+            } else {
+                alert("Please enter a valid quantity.");
+            }
+        });
+    } else {
+        console.error("btnCart, txtQty, or pid not found.");
+    }
+
+    if (btnFav && pid) {
+        btnFav.addEventListener("click", function () {
+            let postobj = {
+                pid: pid.value,
+            };
+            // Send a POST request to add the item to favorites
+            fetch("/fav", {
+                method: "POST",
+                credentials: "same-origin",
+                headers: {
+                    "Accept": "application/json",
+                    "X-Requested-With": "XMLHttpRequest",
+                    "X-CSRFToken": '{{ csrf_token }}',
+                },
+                body: JSON.stringify(postobj),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    alert(data["status"]);
+                })
+                .catch((error) => {
+                    console.error("Error adding to favorites:", error);
+                });
+        });
+    } else {
+        console.error("btnFav or pid not found.");
+    }
+});
+
+    
+
+</script>
+</body>
+
+</html>
+
+{% endblock content %}

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grocery Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        .service {
+            padding: 20px;
+        }
+
+        .service-container-1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-container-2 {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .service-container-2 div {
+            background-color: #f4f2f7;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        /* Main container for the product list */
+        .product {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+        .img-container a{
+            text-decoration: none;
+        }
+        /* Individual product card styling */
+        .img-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 250px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;/
+        }
+
+        /* Hover effect for product card */
+        .img-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styling for the image inside the card */
+        .card-image-top {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        /* Styling for the product details */
+        .img-details {
+            text-align: center;
+            /* Center align text */
+        }
+
+        /* Styling for the product name */
+        .img-details h5 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #2a9d8f;
+            margin: 10px 0;
+            text-transform: capitalize;
+        }
+
+        /* Styling for the product price */
+        .img-details p {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e76f51;
+            margin: 5px 0;
+        }
+
+        /* Section background */
+        .bg-light {
+            background-color: #f8f9fa;
+            padding: 40px 0;
+        }
+
+        /* Product image */
+        .product-image {
+            width: 260px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        }
+
+        /* Product title */
+        h5.text-success {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Product description */
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Price styling */
+        h6 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Input group for quantity */
+        .input-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Button styling */
+        button {
+            border-radius: 5px;
+            transition: all 0.2s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .side-navbar-links {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .side-navbar-links .nav-link {
+            padding: 8px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.2s ease;
+        }
+
+        .side-navbar-links .nav-link:hover {
+            transform: scale(1.05);
+            text-decoration: underline;
+            color: deepskyblue;
+            background-color: #333333;
+        }
+
+        .navbar-links a {
+            transition: all 0.2s ease;
+
+        }
+
+        .navbar-links a:hover {
+
+            transform: scale(1.05);
+            color: #228B22;
+        }
+
+        .navbar-links i:hover {
+            color: #32CD32;
+        }
+
+        .catagory {
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+        }
+
+        .catagory-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Section Title */
+        .catagory h4 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Category Cards */
+        .card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        .card a{
+            text-decoration: none;
+        }
+        /* Card Image */
+        .card img {
+            width: 90%;
+            height: 200px;
+            transition: opacity 0.3s ease;
+            margin-left: 10px;
+            margin-top: 5px;
+        }
+
+        .card:hover img {
+            opacity: 0.9;
+        }
+
+        /* Card Body */
+        .card-body {
+            padding: 15px;
+            background-color: #ffffff;
+            text-align: center;
+            
+        }
+
+        .card-body h5 {
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .card-body h5:hover {
+            color: #0056b3;
+        }
+
+        .card-body p {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+
+        /* Divider Line */
+        hr {
+            border: 1px solid #b8bfc2;
+            margin-bottom: 20px;
+        }
+        .cart-section {
+        background-color: #f9f9f9;
+    }
+
+    #text-container {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  form {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+#search-btn {
+        font-size: 10px; /* Adjust text size */
+        padding: 8px 16px; /* Adjust button padding */
+        height: 40px; /* Adjust button height */
+    }
+
+    #search-btn i {
+        font-size: 16px !important; /* Adjust icon size */
+        margin-right: 5px;
+    }
+
+    .order-btn {
+        background-color: #28a745; /* Green */
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        width: 100%;
+        text-align: center;
+        transition: background-color 0.3s;
+    }
+
+    .order-btn:hover {
+        background-color: #218838; /* Darker Green */
+    }
+        /* Responsive behavior */
+        @media (max-width: 768px) {
+
+            .col-md-5,
+            .col-md-7 {
+                text-align: center;
+            }
+
+            .col-md-7 {
+                margin-top: 20px;
+            }
+
+            .input-group {
+                justify-content: center;
+                margin: 0 auto;
+            }
+        }
+
+
+        @media screen and (max-width:1113px) {
+            .navbar-links {
+                display: none;
+            }
+
+            .toggle {
+                display: block;
+                margin-left: 10px;
+                cursor: pointer;
+            }
+
+            .zango {
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .side-navbar-links {
+                color: black;
+            }
+
+            .card {
+                width: fit-content;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .col-md-4 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .col-md-4 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="toggle" onclick="shownav()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <h1 class="zango">FreshCart</h1>
+        <div class="navbar-links">
+            <a class="nav-link" href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a>
+            {% if request.user.is_authenticated %}
+            <a class="nav-link" href="{% url 'address' %}"><i class="fa fa-user"></i> {{request.user}}</a>
+            <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Login</a>
+            <a class="nav-link" href="{% url 'register' %}"><i class="fa fa-users"></i> Register</a>
+            {% endif %}
+            <a class="nav-link" href="{% url 'collections' %}"><i class="fa fa-shopping-basket"></i> Grocery</a>
+            <a class="nav-link" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a>
+            <a class="nav-link" href="{% url 'favviewpage' %}"><i class="fa fa-heart"></i> Favourite</a>
+            <a class="nav-link" href="#"><i class="fa fa-heart"></i> Order</a>
+        </div>
+    </nav>
+
+    <!-- Side navbar-->
+    <div class="side-navbar" onclick="closenav()">
+        <p class="x" style="text-align: right;">
+            <i class="fa-solid fa-xmark" style="cursor: pointer;"></i>
+        </p>
+        <div class="side-navbar-links" style="color: black;">
+            <a class="nav-link" href="{% url 'home' %}"><i class="fa fa-home"></i> Home</a>
+            {% if request.user.is_authenticated %}
+            <a class="nav-link" href="{% url 'address' %}"><i class="fa fa-user"></i> {{request.user}}</a>
+            <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> Logout</a>
+            {% else %}
+            <a class="nav-link" href="{% url 'login' %}"><i class="fa fa-sign-in"></i> Login</a>
+            <a class="nav-link" href="{% url 'register' %}"><i class="fa fa-users"></i> Register</a>
+            {% endif %}
+            <a class="nav-link" href="{% url 'collections' %}"><i class="fa fa-cubes"></i> Collections</a>
+            <a class="nav-link" href="{% url 'cart' %}"><i class="fa fa-shopping-cart"></i> Cart</a>
+            <a class="nav-link" href="{% url 'favviewpage' %}" style="margin-right: 20px;"><i class="fa fa-heart"></i>
+                Favourite</a>
+            <a class="nav-link" href="#"><i class="fa fa-heart"></i> Order</a>
+        </div>
+    </div>
+    {% block content %}
+    {% endblock content %}
+    <script>
+        var sidenav = document.querySelector(".side-navbar")
+    
+        function shownav() {
+            sidenav.style.left = "0"
+        }
+        function closenav() {
+            sidenav.style.left = "-60%"
+        }
+        // Function to toggle dropdown menus
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            dropdown.classList.toggle('show'); // Add or remove the "show" class
+        }
+      
+    </script>
+    
+    <!--Add to Cart-->

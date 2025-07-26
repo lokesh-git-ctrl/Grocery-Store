@@ -1,0 +1,90 @@
+{% extends 'shop/layouts/main.html' %}
+
+{% block title %}
+Cart | Grocery
+{% endblock title %}
+
+{% block content %}
+<section class="bg-light py-4 my-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h4 class="mb-3">Cart Items</h4>
+                <hr style="border-color:#b8bfc2;">
+            </div>
+
+            <div class="table-responsive"> <!-- Makes the table horizontally scrollable on small screens -->
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                            <th>Quantity</th>
+                            <th>Total Amount</th>
+                            <th>Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in cart %}
+                        <tr>
+                            <td><img src="{{item.product.product_image.url}}" height="75px" width="75px" alt="{{item.product.name}}"></td>
+                            <td>{{item.product.name}}</td>
+                            <td>{{item.product.price | stringformat:'d'}}</td>
+                            <td>{{item.product_qty}}</td>
+                            <td class="amt">{{item.total_cost | stringformat:'d'}}</td>
+                            <td class="removebtn">
+                                <a href="{% url 'remove_cart' item.id %}" onclick="return confirm('Are you sure? to Remove')" class="btn btn-danger btn-sm">
+                                    <i class="fa fa-trash"></i> Remove
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td colspan="2">Total Amount + Shipping:40</td>
+                            <td id="net">0</td>
+                            <td>
+                                <a href="{% url 'checkout' %}">
+                                    <button class="btn btn-success btn-sm"><i class="fa fa-shopping-cart"></i> Order Now</button> <!-- Smaller button size -->
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Footer Section -->
+
+
+<script>
+    let totalAmount = 0;
+
+    // Loop through each item and calculate total
+    document.querySelectorAll('.amt').forEach((element) => {
+        totalAmount += parseFloat(element.textContent.replace(/[^\d.-]/g, '')); // Remove any non-numeric characters and sum up
+    });
+
+    const shippingCost = 40;
+    const finalTotal = totalAmount + shippingCost;
+
+    // Update the total amount in the DOM
+    document.getElementById('net').textContent = "Rs. " + finalTotal;
+
+    // Add event listener to the "Order Now" button
+    document.querySelector(".btn-success").addEventListener("click", function (event) {
+        if (finalTotal < 150) {
+            event.preventDefault(); // Prevent navigation
+            alert("Your total amount must be above Rs. 150 to place an order.");
+        }
+    });
+</script>
+
+
+{% endblock content %}
